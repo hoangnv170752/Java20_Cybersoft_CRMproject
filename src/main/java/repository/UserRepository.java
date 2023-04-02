@@ -2,7 +2,7 @@ package repository;
 import config.DbConfig;
 import filter.AuthList;
 import model.RoleModel;
-import model.UserColumn;
+import model.tableData.UserColumn;
 import model.UserModel;
 
 import java.sql.Connection;

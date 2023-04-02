@@ -10,41 +10,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "ProjectController",urlPatterns = {"/project","/project-add","/project-edit","/project-detail"})
-public class ProjectController extends HttpServlet {
+@WebServlet(name = "TaskController",urlPatterns = {"/task","/task-add","/task-edit"})
+public class TaskController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         AuthenHandling AuthenHandling = new AuthenHandling();
         int roleId = AuthenHandling.getRoleOfUser(req);
 
         if(roleId == AuthList.STAFF.getValue()){
-            try {
-                req.getRequestDispatcher("403.jsp").forward(req,resp);
-            } catch (ServletException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            req.getRequestDispatcher("403.jsp").forward(req,resp);
         } else {
             String servletPath = req.getServletPath();
             switch (servletPath){
-                case "/project":
-                    req.getRequestDispatcher("project.jsp").forward(req,resp);
+                case "/task":
+                    req.getRequestDispatcher("task.jsp").forward(req,resp);
                     break;
-                case "/project-detail":
-                    req.getRequestDispatcher("project-detail.jsp").forward(req,resp);
+                case "/task-add":
+                    req.getRequestDispatcher("task-add.jsp").forward(req,resp);
                     break;
-                case "/project-add":
-                    req.getRequestDispatcher("project-add.jsp").forward(req,resp);
-                    break;
-                case "/project-edit":
-                    req.getRequestDispatcher("project-edit.jsp").forward(req,resp);
+                case "/task-edit":
+                    req.getRequestDispatcher("task-edit.jsp").forward(req,resp);
                     break;
                 default:
                     break;
             }
         }
-
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

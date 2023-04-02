@@ -1,4 +1,4 @@
-package model;
+package model.tableData;
 
 public enum RoleColumn {
     ID("id"),

@@ -1,6 +1,7 @@
 package repository;
 import config.DbConfig;
 import model.*;
+import model.tableData.ProjectColumn;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

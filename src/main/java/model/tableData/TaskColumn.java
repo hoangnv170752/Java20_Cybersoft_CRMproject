@@ -1,15 +1,19 @@
-package model;
+package model.tableData;
 
-public enum ProjectColumn {
+public enum TaskColumn {
     ID("id"),
     NAME("name"),
     START_DATE("start_date"),
     END_DATE("end_date"),
-    LEADER_ID("leader_id");
+    USER_ID("user_id"),
+    PROJECT_ID("project_id"),
+    STATUS_ID("status_id");
+
     private String value;
-    ProjectColumn(String value) {
+    TaskColumn(String value) {
         this.value = value;
     }
+
     public String getValue(){
         return value;
     }

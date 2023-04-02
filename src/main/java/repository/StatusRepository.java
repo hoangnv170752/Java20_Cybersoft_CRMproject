@@ -1,6 +1,6 @@
 package repository;
 import config.DbConfig;
-import model.StatusColumn;
+import model.tableData.StatusColumn;
 import model.StatusModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

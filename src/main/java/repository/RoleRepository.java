@@ -1,7 +1,7 @@
 package repository;
 
 import config.DbConfig;
-import model.RoleColumn;
+import model.tableData.RoleColumn;
 import model.RoleModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

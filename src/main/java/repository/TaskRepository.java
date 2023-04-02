@@ -2,6 +2,7 @@ package repository;
 
 import config.DbConfig;
 import model.*;
+import model.tableData.TaskColumn;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
