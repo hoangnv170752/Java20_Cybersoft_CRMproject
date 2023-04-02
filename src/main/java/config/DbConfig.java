@@ -3,9 +3,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 public class DbConfig {
     private static String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
-    private static String URL = "jdbc:mysql://localhost:3303/crm_apps";
+    private static String URL = "jdbc:mysql://103.160.2.183:3306/hoangdev";
     private static String USER_NAME = "root";
-    private static String PASSWORD = "";
+    private static String PASSWORD = "123456a@";
     public static Connection getMySQLConnection(){
         Connection connection = null;
         try {
