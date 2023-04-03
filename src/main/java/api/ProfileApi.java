@@ -29,7 +29,7 @@ public class ProfileApi extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         List<Response> responseList = new ArrayList<>();
-        Response basicResponse = new Response();
+        Response Response = new Response();
 
         String servletPath = req.getServletPath();
         switch (servletPath){
@@ -40,10 +40,10 @@ public class ProfileApi extends HttpServlet {
                 responseList = doGetOfTaskUpdate(req);
                 break;
             default:
-                basicResponse.setStatusCode(404);
-                basicResponse.setMessage("Không tồn tại URL");
+                Response.setStatusCode(404);
+                Response.setMessage("Không tồn tại URL");
 
-                responseList.add(basicResponse);
+                responseList.add(Response);
                 break;
         }
 
@@ -64,19 +64,19 @@ public class ProfileApi extends HttpServlet {
 
         // Lấy thông tin user
         AuthenHandling auth = new AuthenHandling();
-        Response basicResponse = auth.getUserInfo(req);
-        responseList.add(basicResponse);
-        user = (UserModel) basicResponse.getData();
+        Response Response = auth.getUserInfo(req);
+        responseList.add(Response);
+        user = (UserModel) Response.getData();
 
-        basicResponse = getTaskStatics();
-        responseList.add(basicResponse);
-        basicResponse = getAllTaskOfUser();
-        responseList.add(basicResponse);
+        Response = getTaskStatics();
+        responseList.add(Response);
+        Response = getAllTaskOfUser();
+        responseList.add(Response);
 
         return responseList;
     }
     private Response getTaskStatics(){
-        Response basicResponse = new Response();
+        Response Response = new Response();
 
         int[] statusList = {0,0,0};   // 0-unbegun qty, 1-doing qty, 2-finish qty
 
@@ -98,43 +98,43 @@ public class ProfileApi extends HttpServlet {
                 statusList[1] = Math.round(statusList[1] * 100.0f / taskStatusList.size());
                 statusList[2] = Math.round(statusList[2] * 100.0f / taskStatusList.size());
             }
-            basicResponse.setStatusCode(200);
-            basicResponse.setMessage("Lấy danh sách thống kê công việc của người dùng thành công");
-            basicResponse.setData(statusList);
+            Response.setStatusCode(200);
+            Response.setMessage("Lấy danh sách thống kê công việc của người dùng thành công");
+            Response.setData(statusList);
         } else {
-            basicResponse.setStatusCode(404);
-            basicResponse.setMessage("Lấy danh sách thống kê công việc của người dùng thất bại");
-            basicResponse.setData(null);
+            Response.setStatusCode(404);
+            Response.setMessage("Lấy danh sách thống kê công việc của người dùng thất bại");
+            Response.setData(null);
         }
-        return basicResponse;
+        return Response;
     }
     private Response getAllTaskOfUser(){
-        Response basicResponse = new Response();
+        Response Response = new Response();
         if(user != null){
-            basicResponse.setStatusCode(200);
+            Response.setStatusCode(200);
             ProfileService profileService = new ProfileService();
             List<TaskModel> listTask = profileService.getAllTaskOfUser(user.getId());
-            basicResponse.setMessage("Lấy danh sách công việc thành công");
-            basicResponse.setData(listTask);
+            Response.setMessage("Lấy danh sách công việc thành công");
+            Response.setData(listTask);
         } else {
-            basicResponse.setStatusCode(404);
-            basicResponse.setMessage("Lấy danh sách công việc thất bại");
-            basicResponse.setData(null);
+            Response.setStatusCode(404);
+            Response.setMessage("Lấy danh sách công việc thất bại");
+            Response.setData(null);
         }
 
-        return basicResponse;
+        return Response;
     }
     private List<Response> doGetOfTaskUpdate(HttpServletRequest req){
         List<Response> responseList = new ArrayList<>();
         AuthenHandling auth = new AuthenHandling();
-        Response basicResponse = auth.getUserInfo(req);
-        responseList.add(basicResponse);
-        user = (UserModel) basicResponse.getData();
+        Response Response = auth.getUserInfo(req);
+        responseList.add(Response);
+        user = (UserModel) Response.getData();
 
-        basicResponse = getTask(taskID);
-        responseList.add(basicResponse);
-        basicResponse = getAllStatus();
-        responseList.add(basicResponse);
+        Response = getTask(taskID);
+        responseList.add(Response);
+        Response = getAllStatus();
+        responseList.add(Response);
 
         taskID = null;
 
@@ -142,61 +142,61 @@ public class ProfileApi extends HttpServlet {
     }
 
     private Response getAllStatus(){
-        Response basicResponse = new Response();
+        Response Response = new Response();
         StatusService statusService = new StatusService();
         List<StatusModel> list = statusService.getAllStatus();
 
         if(list.size()>0){
-            basicResponse.setStatusCode(200);
-            basicResponse.setMessage("Lấy danh sách trạng thái công việc thành công");
-            basicResponse.setData(list);
+            Response.setStatusCode(200);
+            Response.setMessage("Lấy danh sách trạng thái công việc thành công");
+            Response.setData(list);
         } else {
-            basicResponse.setStatusCode(404);
-            basicResponse.setMessage("Lấy danh sách trạng thái công việc thất bại");
-            basicResponse.setData(null);
+            Response.setStatusCode(404);
+            Response.setMessage("Lấy danh sách trạng thái công việc thất bại");
+            Response.setData(null);
         }
 
-        return basicResponse;
+        return Response;
     }
 
     private Response getTask(String taskId){
-        Response basicResponse = new Response();
+        Response Response = new Response();
 
         if(taskId != null && !"".equals(taskId)){
-            basicResponse.setStatusCode(200);
+            Response.setStatusCode(200);
             ProfileService profileService = new ProfileService();
             TaskModel task = profileService.getTaskById(Integer.parseInt(taskId));
-            basicResponse.setMessage("Lấy dữ liệu công việc thành công");
-            basicResponse.setData(task);
+            Response.setMessage("Lấy dữ liệu công việc thành công");
+            Response.setData(task);
         }else {
-            basicResponse.setStatusCode(404);
-            basicResponse.setMessage("Lấy dữ liệu công việc thất bại");
-            basicResponse.setData(null);
+            Response.setStatusCode(404);
+            Response.setMessage("Lấy dữ liệu công việc thất bại");
+            Response.setData(null);
         }
-        return basicResponse;
+        return Response;
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Response basicResponse = new Response();
+        Response Response = new Response();
 
         String servletPath = req.getServletPath();
         String function = req.getParameter("function");;
         switch (servletPath){
             case "/api/profile":
-                basicResponse = doPostOfProfile(req,resp,function);
+                Response = doPostOfProfile(req,resp,function);
                 break;
             case "/api/profile-task-update":
-                basicResponse = doPostOfTaskUpdate(req,resp,function);
+                Response = doPostOfTaskUpdate(req,resp,function);
                 break;
             default:
-                basicResponse.setStatusCode(404);
-                basicResponse.setMessage("Không tồn tại URL");
+                Response.setStatusCode(404);
+                Response.setMessage("Không tồn tại URL");
                 break;
         }
 
         Gson gson = new Gson();
-        String dataJson = gson.toJson(basicResponse);
+        String dataJson = gson.toJson(Response);
 
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
@@ -208,80 +208,80 @@ public class ProfileApi extends HttpServlet {
     }
 
     private Response doPostOfProfile(HttpServletRequest req, HttpServletResponse resp, String function){
-        Response basicResponse = new Response();
+        Response Response = new Response();
         switch (function){
             case "logout":
                 AuthenHandling AuthenHandling = new AuthenHandling();
-                basicResponse = AuthenHandling.logOut(req,resp);
+                Response = AuthenHandling.logOut(req,resp);
                 break;
             case "goToTaskUpdate":
                 taskID = req.getParameter("taskID");
-                basicResponse = goToTaskUpdate(taskID);
+                Response = goToTaskUpdate(taskID);
                 break;
             default:
                 break;
         }
-        return basicResponse;
+        return Response;
     }
 
     private Response goToTaskUpdate(String taskId){
-        Response basicResponse = new Response();
+        Response Response = new Response();
 
         if(taskId != null && !"".equals(taskId) ){
-            basicResponse.setStatusCode(200);
-            basicResponse.setMessage("Truy cập vào trang cập nhập công việc");
-            basicResponse.setData("/profile-task-update");
+            Response.setStatusCode(200);
+            Response.setMessage("Truy cập vào trang cập nhập công việc");
+            Response.setData("/profile-task-update");
         } else{
-            basicResponse.setStatusCode(400);
-            basicResponse.setMessage("Không tìm thấy ID của công việc muốn cập nhập");
-            basicResponse.setData(null);
+            Response.setStatusCode(400);
+            Response.setMessage("Không tìm thấy ID của công việc muốn cập nhập");
+            Response.setData(null);
         }
-        return basicResponse;
+        return Response;
     }
 
     private Response doPostOfTaskUpdate(HttpServletRequest req, HttpServletResponse resp, String function){
-        Response basicResponse = new Response();
+        Response Response = new Response();
 
         switch (function){
             case "logout":
                 AuthenHandling AuthenHandling = new AuthenHandling();
-                basicResponse = AuthenHandling.logOut(req,resp);
+                Response = AuthenHandling.logOut(req,resp);
                 break;
             case "saveStatus":
-                basicResponse = updateTaskStatus(req);
+                Response = updateTaskStatus(req);
                 break;
             default:
                 break;
         }
-        return basicResponse;
+        return Response;
     }
 
     private Response updateTaskStatus(HttpServletRequest req){
-        Response basicResponse = new Response();
+        Response Response = new Response();
 
         String taskId = req.getParameter("taskId");
         String statusID = req.getParameter("statusId");
 
         if("0".equals(taskId)){
-            basicResponse.setStatusCode(400);
-            basicResponse.setMessage("Không tìm thấy dữ liệu công việc");
-            basicResponse.setData(-1);
+            Response.setStatusCode(400);
+            Response.setMessage("Không tìm thấy dữ liệu công việc");
+            Response.setData(-1);
 
-            return basicResponse;
+            return Response;
         }
 
         ProfileService profileService = new ProfileService();
         boolean result = profileService.updateStatusTask(Integer.parseInt(taskId),Integer.parseInt(statusID));
 
         if(result){
-            basicResponse.setStatusCode(200);
-            basicResponse.setMessage("Cập nhập trạng thái công việc thành công");
-            basicResponse.setData(1);
+            Response.setStatusCode(200);
+            Response.setMessage("Cập nhập trạng thái công việc thành công");
+            Response.setData(1);
         }else {
-            basicResponse.setStatusCode(400);
-            basicResponse.setMessage("Cập nhập trạng thái công việc thất bại");
-            basicResponse.setData(0);
+            Response.setStatusCode(400);
+            Response.setMessage("Cập nhập trạng thái công việc thất bại");
+            Response.setData(0);
         }
-        return basicResponse;
+        return Response;
     }
 }

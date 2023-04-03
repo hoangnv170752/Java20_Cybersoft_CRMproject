@@ -26,12 +26,12 @@ public class HomeApi extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Response> responseList = new ArrayList<>();
         AuthenHandling auth = new AuthenHandling();
-        Response basicResponse = auth.getUserInfo(req);
-        responseList.add(basicResponse);
-        user = (UserModel) basicResponse.getData();
+        Response Response = auth.getUserInfo(req);
+        responseList.add(Response);
+        user = (UserModel) Response.getData();
 
-        basicResponse = getTaskStatus();
-        responseList.add(basicResponse);
+        Response = getTaskStatus();
+        responseList.add(Response);
 
         Gson gson = new Gson();
         String dataJson = gson.toJson(responseList);
@@ -47,19 +47,19 @@ public class HomeApi extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Response basicResponse = new Response();
+        Response Response = new Response();
         String function = req.getParameter("function");
         switch (function){
             case "logout":
                 AuthenHandling AuthenHandling = new AuthenHandling();
-                basicResponse = AuthenHandling.logOut(req,resp);
+                Response = AuthenHandling.logOut(req,resp);
                 break;
             default:
                 break;
         }
 
         Gson gson = new Gson();
-        String dataJson = gson.toJson(basicResponse);
+        String dataJson = gson.toJson(Response);
 
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
@@ -71,7 +71,7 @@ public class HomeApi extends HttpServlet {
     }
 
     private Response getTaskStatus(){
-        Response basicResponse = new Response();
+        Response Response = new Response();
 
         int[] statusList = {0,0,0,0};   // 0-task qty sum, 1-unbegun qty, 2-doing qty, 3-finish qty
 
@@ -89,15 +89,15 @@ public class HomeApi extends HttpServlet {
                         statusList[3]++;
                     }
                 }
-                basicResponse.setStatusCode(200);
-                basicResponse.setMessage("Lấy danh sách thống kê công việc của người dùng thành công");
-                basicResponse.setData(statusList);
+                Response.setStatusCode(200);
+                Response.setMessage("Lấy danh sách thống kê công việc của người dùng thành công");
+                Response.setData(statusList);
             }
         } else{
-            basicResponse.setStatusCode(404);
-            basicResponse.setMessage("Lấy danh sách thống kê công việc của người dùng thất bại");
-            basicResponse.setData(null);
+            Response.setStatusCode(404);
+            Response.setMessage("Lấy danh sách thống kê công việc của người dùng thất bại");
+            Response.setData(null);
         }
-        return basicResponse;
+        return Response;
     }
 }

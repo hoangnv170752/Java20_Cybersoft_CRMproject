@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthenHandling {
     final String COOKIE_NAME = "email";
     public Response getUserInfo(HttpServletRequest req) {
-        Response basicResponse = new Response();
+        Response Response = new Response();
         CookieHandling cookieHandling = new CookieHandling();
         Cookie cookie = cookieHandling.getCookie(req);
 
@@ -20,54 +20,54 @@ public class AuthenHandling {
             AuthService authService = new AuthService();
             UserModel user = authService.getUser(cookie.getValue());
             if(user != null){
-                basicResponse.setStatusCode(200);
-                basicResponse.setMessage("Lấy thông tin user thành công");
-                basicResponse.setData(user);
+                Response.setStatusCode(200);
+                Response.setMessage("Lấy thông tin user thành công");
+                Response.setData(user);
 
-                return basicResponse;
+                return Response;
             } else {
-                basicResponse.setMessage("Không tìm thấy user");
+                Response.setMessage("Không tìm thấy user");
             }
         } else {
-            basicResponse.setMessage("Không tìm thấy cookie");
+            Response.setMessage("Không tìm thấy cookie");
         }
-        basicResponse.setStatusCode(404);
-        basicResponse.setData(null);
+        Response.setStatusCode(404);
+        Response.setData(null);
 
-        return basicResponse;
+        return Response;
     }
     public Response logOut(HttpServletRequest req, HttpServletResponse resp){
-        Response basicResponse = new Response();
+        Response Response = new Response();
         CookieHandling cookieHandling = new CookieHandling();
         Cookie cookie = cookieHandling.getCookie(req);
 
         if(cookie != null){
-            basicResponse.setStatusCode(200);
+            Response.setStatusCode(200);
             cookieHandling.deleteCookie(resp,cookie);
-            basicResponse.setMessage("Đăng xuất thành công");
-            basicResponse.setData(true);
+            Response.setMessage("Đăng xuất thành công");
+            Response.setData(true);
         } else{
-            basicResponse.setStatusCode(400);
-            basicResponse.setMessage("Đăng xuất thất bại");
-            basicResponse.setData(false);
+            Response.setStatusCode(400);
+            Response.setMessage("Đăng xuất thất bại");
+            Response.setData(false);
         }
-        return basicResponse;
+        return Response;
     }
     public Response verifyLoginAccount(HttpServletResponse resp, String email, String password){
-        Response basicResponse = new Response();
+        Response Response = new Response();
         LoginService loginService = new LoginService();
         if(loginService.checkLogin(email,password)){
             CookieHandling cookieHandling = new CookieHandling();
             cookieHandling.addCookie(resp,email);
-            basicResponse.setStatusCode(200);
-            basicResponse.setMessage("Đăng nhập thành công");
-            basicResponse.setData(true);
+            Response.setStatusCode(200);
+            Response.setMessage("Đăng nhập thành công");
+            Response.setData(true);
         } else{
-            basicResponse.setStatusCode(200);
-            basicResponse.setMessage("Đăng nhập thất bại");
-            basicResponse.setData(false);
+            Response.setStatusCode(200);
+            Response.setMessage("Đăng nhập thất bại");
+            Response.setData(false);
         }
-        return basicResponse;
+        return Response;
     }
     public boolean isLoggedIn(Cookie[] cookies){
         boolean isLoggedin = false;

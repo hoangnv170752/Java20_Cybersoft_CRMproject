@@ -24,9 +24,9 @@ public class LoginApi extends HttpServlet {
         String password = req.getParameter("password");
 
         AuthenHandling AuthenHandling = new AuthenHandling();
-        Response basicResponse = AuthenHandling.verifyLoginAccount(resp,email,password);
+        Response Response = AuthenHandling.verifyLoginAccount(resp,email,password);
         Gson gson = new Gson();
-        String dataJson = gson.toJson(basicResponse);
+        String dataJson = gson.toJson(Response);
 
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
