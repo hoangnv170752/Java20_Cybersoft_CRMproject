@@ -29,8 +29,8 @@
         </form>
         <button id="btn-login" type="submit" class="btn btn-primary">Đăng nhập</button>
         </br></br>
-        <h3 id="text-announce" style="font-size: 18px; text-align: right">
-        </h3>
+        <h3 id="text-announce" style="font-size: 18px; text-align: right">     </h3>
+
       </div>
     </div>
   </div>
